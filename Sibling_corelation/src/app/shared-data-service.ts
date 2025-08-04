@@ -14,5 +14,6 @@ export class SharedDataService {
   //update the complex object
   updateObject(obj: MyComplexObject) {
     this.objectSource.next(obj);
+    console.log('Step 4: inside updateObject');
   }
 }

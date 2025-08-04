@@ -1,30 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MyComplexObject } from '../Model/Object';
-import { Subscription } from 'rxjs';
 import { SharedDataService } from '../shared-data-service';
+import { Subscription } from 'rxjs';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-sibling-a',
+  selector: 'app-sibling-d',
   imports: [JsonPipe],
-  templateUrl: './sibling-a.html',
-  styleUrl: './sibling-a.css',
+  templateUrl: './sibling-d.html',
+  styleUrl: './sibling-d.css',
 })
-export class SiblingA implements OnInit, OnDestroy {
+export class SiblingD implements OnInit, OnDestroy {
   currentObject: MyComplexObject | null = null;
   private sub!: Subscription;
 
-  constructor(private sharedData: SharedDataService) {
-    console.log('Step 1: inside constructor SiblingA');
-  }
+  constructor(private sharedData: SharedDataService) {}
 
   ngOnInit() {
     // Subscribe to shared object updates
-    console.log('Step 2: inside OnInit SiblingA');
     this.sub = this.sharedData.object$.subscribe((SubscribeObject) => {
       this.currentObject = SubscribeObject;
-      console.log(this.currentObject);
-      console.log('Step 3: inside subscribe SiblingA');
     });
   }
 
@@ -37,13 +32,10 @@ export class SiblingA implements OnInit, OnDestroy {
         tags: ['angular', 'service', 'sibling-a'],
       },
     };
-    console.log('Step 1: inside changeObject SiblingA');
     this.sharedData.updateObject(updated); // Publish update
-    console.log('Step 5: inside changeObject SiblingA');
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe(); // Prevent memory leaks
-    console.log('Step 6: inside ngOnDestroy SiblingA');
   }
 }

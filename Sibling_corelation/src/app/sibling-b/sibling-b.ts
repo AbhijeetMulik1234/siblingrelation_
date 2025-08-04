@@ -14,12 +14,16 @@ export class SiblingB implements OnInit, OnDestroy {
   currentObject: MyComplexObject | null = null;
   private sub!: Subscription;
 
-  constructor(private sharedData: SharedDataService) {}
+  constructor(private sharedData: SharedDataService) {
+    console.log('Step 1: inside constructor SiblingB');
+  }
 
   ngOnInit() {
-    // Subscribe to updates from service
-    this.sub = this.sharedData.object$.subscribe((obj) => {
-      this.currentObject = obj;
+    console.log('Step 2: inside OnInit SiblingB');
+    this.sub = this.sharedData.object$.subscribe((SubscribeObject) => {
+      this.currentObject = SubscribeObject;
+      console.log(this.currentObject);
+      console.log('Step 3: inside subscribe SiblingB');
     });
   }
   changeObject() {
@@ -31,9 +35,12 @@ export class SiblingB implements OnInit, OnDestroy {
         tags: ['angular', 'service', 'sibling-b'],
       },
     };
+    console.log('Step 1: inside changeObject SiblingB');
     this.sharedData.updateObject(updated); //publish update
+    console.log('Step 5: inside changeObject SiblingB');
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+    console.log('Step 6: inside ngOnDestroy SiblingB');
   }
 }
